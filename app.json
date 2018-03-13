@@ -1,0 +1,7 @@
+{
+  "name": "oliviergtetris",
+  "displayName": "Tetris",
+  "expo": {
+    "sdkVersion": "25.0.0"
+  }
+}
