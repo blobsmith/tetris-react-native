@@ -15,12 +15,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#222',
         flexDirection: 'row',
         height: 80,
+        zIndex: 1
     },
     title: {
         height: 20,
         color: 'white',
         flex: 2,
         marginTop: 15,
+        fontWeight: 'bold',
+        fontSize: 16,
     },
     image: {
         flex: 1,

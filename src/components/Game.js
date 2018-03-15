@@ -11,20 +11,24 @@ import Information from '../components/Information';
 
 const Game = ( props ) => (
     <View style={styles.game} >
-        <View style={styles.imageContainer} >
-            <View>
-                <Image
-                    style={styles.image}
-                    source={require('../images/background-image5.png')}
-                />
-                <Surface width={200} height={500}  >
-                    <Blocks />
-                    <RemainingBlocks />
-                </Surface>
+        { props.gameState === 'play' &&
+            <View style={styles.imageContainer} >
+                <View>
+                    <Image
+                        style={styles.image}
+                        source={require('../images/background-image5.png')}
+                    />
+                    <Surface width={200} height={500}  >
+                        <Blocks />
+                        <RemainingBlocks />
+                    </Surface>
+                </View>
+                <Controller />
             </View>
-            <Controller />
-        </View>
-        <Scores points={props.points} style={styles.score} />
+        }
+
+        <Scores points={props.points} />
+        { props.gameState === 'gameOver' && <Information playOnClick={props.playOnClick} /> }
     </View>
 );
 

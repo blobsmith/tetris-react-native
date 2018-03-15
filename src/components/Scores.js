@@ -12,7 +12,7 @@ const Scores = ( props ) => (
 
 const styles = StyleSheet.create({
     container: {
-        height: 90,
+        height: 30,
         width: '100%',
         backgroundColor: '#222',
         paddingLeft: 20
