@@ -19,7 +19,7 @@ class Controller extends React.Component  {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderGrant: (evt, gestureState) => {
-        if ((evt.nativeEvent.timestamp - this.lastTouch) < 140) {
+        if ((evt.nativeEvent.timestamp - this.lastTouch) < 200) {
           this.props.rotate(this.props.gameArea, this.props.coordinates, this.props.shape);
         }
         this.lastTouch = evt.nativeEvent.timestamp;
@@ -30,7 +30,7 @@ class Controller extends React.Component  {
         const moveXDiff = gestureState.dx-this.lastXMove;
 
         // Go down
-        if (moveYDiff > 3) {
+        if (moveYDiff > 2) {
           this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
         }
         else {
