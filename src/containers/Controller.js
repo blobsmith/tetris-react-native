@@ -36,12 +36,12 @@ class Controller extends React.Component  {
         else {
           if (Math.abs(gestureState.moveX) > 10) {
             // Go right
-            if (moveXDiff > 4) {
+            if (moveXDiff > 6) {
               this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
             }
 
             // Go left
-            if (moveXDiff < -4) {
+            if (moveXDiff < -6) {
               this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
             }
           }

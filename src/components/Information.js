@@ -32,7 +32,7 @@ const Information = ( props ) => (
             </Text>
             <Text style={styles.text} >
                 You can contact me on LinkedIn:
-                <Text style={styles.link} onPress={() => Linking.openURL('http://google.com')} >
+                <Text style={styles.link} onPress={() => Linking.openURL('https://www.linkedin.com/in/gilbertolivier/')} >
                     https://www.linkedin.com/in/gilbertolivier/
                 </Text>
             </Text>
