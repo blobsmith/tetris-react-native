@@ -18,7 +18,8 @@ class Game extends React.Component {
 
         this.state = {
             points: this.INIT_POINTS,
-            gameState: this.PLAY
+            gameState: this.GAME_OVER,
+            started: false
         };
 
         // Set a new shape.
@@ -73,7 +74,8 @@ class Game extends React.Component {
         this.props.newGame();
         this.setState({
             points: this.INIT_POINTS,
-            gameState: this.PLAY
+            gameState: this.PLAY,
+            started: true
         });
     };
 
@@ -83,6 +85,7 @@ class Game extends React.Component {
                 gameState={this.state.gameState}
                 points={this.state.points}
                 playOnClick={this.playOnClick}
+                started={this.state.started}
             />
         );
     }

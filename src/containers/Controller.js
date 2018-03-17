@@ -25,25 +25,25 @@ class Controller extends React.Component  {
         this.lastTouch = evt.nativeEvent.timestamp;
       },
       onPanResponderMove: (evt, gestureState) => {
-        // Go bottom
         const moveYDiff = gestureState.dy-this.lastYMove;
         const moveXDiff = gestureState.dx-this.lastXMove;
 
         // Go down
-        if (moveYDiff > 2) {
+        if (moveYDiff > 2 && Math.abs(gestureState.dy) > 20) {
           this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
         }
-        else {
-          if (Math.abs(gestureState.moveX) > 10) {
-            // Go right
-            if (moveXDiff > 6) {
-              this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
-            }
 
-            // Go left
-            if (moveXDiff < -6) {
-              this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
-            }
+        // Go right or left
+
+        if (Math.abs(gestureState.moveX) > 10 && Math.abs(gestureState.dx) > 20) {
+          // Go right
+          if (moveXDiff > 6) {
+            this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
+          }
+
+          // Go left
+          if (moveXDiff < -6) {
+            this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
           }
         }
         this.lastXMove = gestureState.dx;

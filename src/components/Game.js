@@ -26,8 +26,7 @@ const Game = ( props ) => (
                 <Controller />
             </View>
         }
-
-        <Scores points={props.points} />
+        { props.started && <Scores points={props.points} /> }
         { props.gameState === 'gameOver' && <Information playOnClick={props.playOnClick} /> }
     </View>
 );
