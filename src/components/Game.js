@@ -4,6 +4,7 @@ import { View, StyleSheet, Image } from 'react-native';
 
 import Blocks from '../containers/Blocks';
 import Controller from '../containers/Controller';
+import GoDownButton from '../containers/GoDownButton';
 import RemainingBlocks from '../containers/RemainingBlocks';
 
 import Scores from '../components/Scores';
@@ -22,8 +23,9 @@ const Game = ( props ) => (
                         <Blocks />
                         <RemainingBlocks />
                     </Surface>
+                    <Controller />
                 </View>
-                <Controller />
+                <GoDownButton />
             </View>
         }
         { props.started && <Scores points={props.points} /> }

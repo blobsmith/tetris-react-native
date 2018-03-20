@@ -7,9 +7,10 @@ import { View, PanResponder, StyleSheet } from 'react-native';
 class Controller extends React.Component  {
 
   componentWillMount () {
-    this.lastXMove = 0;
-    this.lastYMove = 0;
+    this.action = '';
+    this.xStart = 0;
     this.lastTouch = 0;
+
     this.panResponder = PanResponder.create({
 
       // Ask to be the responder:
@@ -19,35 +20,43 @@ class Controller extends React.Component  {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderGrant: (evt, gestureState) => {
-        if ((evt.nativeEvent.timestamp - this.lastTouch) < 200) {
-          this.props.rotate(this.props.gameArea, this.props.coordinates, this.props.shape);
-        }
         this.lastTouch = evt.nativeEvent.timestamp;
       },
       onPanResponderMove: (evt, gestureState) => {
-        const moveYDiff = gestureState.dy-this.lastYMove;
-        const moveXDiff = gestureState.dx-this.lastXMove;
 
-        // Go down
-        if (moveYDiff > 2 && Math.abs(gestureState.dy) > 20) {
-          this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
+        // Go right
+        if (gestureState.vx > 0) {
+          if (this.action === 'RIGHT') {
+            if ( (gestureState.moveX - this.xStart) > 7) {
+              this.xStart = gestureState.moveX;
+              this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
+            }
+          }
+          else {
+            this.xStart = gestureState.moveX;
+          }
+          this.action = 'RIGHT';
         }
 
-        // Go right or left
-
-        if (Math.abs(gestureState.moveX) > 10 && Math.abs(gestureState.dx) > 20) {
-          // Go right
-          if (moveXDiff > 6) {
-            this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
+        // Go left
+        if (gestureState.vx < 0) {
+          if (this.action === 'LEFT') {
+            if ( (this.xStart - gestureState.moveX)  > 7) {
+              this.xStart = gestureState.moveX;
+              this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
+            }
           }
-
-          // Go left
-          if (moveXDiff < -6) {
-            this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
+          else {
+            this.xStart = gestureState.moveX;
           }
+          this.action = 'LEFT';
         }
-        this.lastXMove = gestureState.dx;
-        this.lastYMove = gestureState.dy;
+      },
+
+      onPanResponderRelease: (evt, gestureState) => {
+        if ((evt.nativeEvent.timestamp - this.lastTouch) < 100) {
+          this.props.rotate(this.props.gameArea, this.props.coordinates, this.props.shape);
+        }
       },
     });
   }
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
     height: '100%',
     top: 0,
     left: 0,
-    zIndex: 10
+    zIndex: 10,
   },
 });
 

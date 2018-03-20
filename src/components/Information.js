@@ -11,10 +11,10 @@ const Information = ( props ) => (
                 - Move you finger right or left to move the piece.
             </Text>
             <Text style={styles.list}  >
-                - Move down to make fall down the piece.
+                - Ride down on the "fall down" bar to go down the piece.
             </Text>
             <Text style={styles.list}  >
-                - Double tap to rotate the piece.
+                - Simple tap on the game area to rotate the piece.
             </Text>
             <Text style={styles.list}  >
                 - Click on play below to start.
