@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     width: 70,
     height: 350,
     zIndex: 31,
-    bottom: 60,
-    left: 20,
+    bottom: 20,
+    right: 2,
   },
   image: {
     zIndex: 29,

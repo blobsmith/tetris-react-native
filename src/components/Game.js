@@ -6,12 +6,14 @@ import Blocks from '../containers/Blocks';
 import Controller from '../containers/Controller';
 import GoDownButton from '../containers/GoDownButton';
 import RemainingBlocks from '../containers/RemainingBlocks';
+import NextShape from '../containers/NextShape';
 
 import Scores from '../components/Scores';
 import Information from '../components/Information';
 
 const Game = ( props ) => (
     <View style={styles.game} >
+        { props.gameState === 'play' && <NextShape /> }
         { props.gameState === 'play' &&
             <View style={styles.imageContainer} >
                 <View>
@@ -19,7 +21,7 @@ const Game = ( props ) => (
                         style={styles.image}
                         source={require('../images/background-image5.png')}
                     />
-                    <Surface width={200} height={500}  >
+                    <Surface width={200} height={500} >
                         <Blocks />
                         <RemainingBlocks />
                     </Surface>

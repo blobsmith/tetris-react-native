@@ -1,7 +1,7 @@
 import React from 'react';
 import GameComponent from '../components/Game';
 
-import { newShapeAction, goDownAction, newGameAction, insertShapeInAreaAction, removingWholeLinesAction } from '../actions';
+import { newShapeAction, nextShapeAction, goDownAction, newGameAction, insertShapeInAreaAction, removingWholeLinesAction } from '../actions';
 import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
 import gameStat from '../services/GameStatService';
@@ -24,6 +24,7 @@ class Game extends React.Component {
 
         // Set a new shape.
         this.props.newShape(blockManagement.getShapeRandomly());
+        this.props.setNextShape(blockManagement.getShapeRandomly());
 
         // Set a new game.
         this.props.newGame();
@@ -47,7 +48,8 @@ class Game extends React.Component {
         }
 
         // Create a new shape.
-        this.props.newShape(blockManagement.getShapeRandomly());
+        this.props.newShape(Object.assign({}, this.props.nextShape));
+        this.props.setNextShape(blockManagement.getShapeRandomly());
     }
 
     componentDidMount() {
@@ -97,7 +99,8 @@ const mapStatesToProps = (state) => {
         coordinate: state.coordinate,
         shapeCoordinate: state.shapeCoordinate,
         gameArea: state.area,
-        shape: state.shape
+        shape: state.shape,
+        nextShape: state.nextShape
     }
 };
 
@@ -108,6 +111,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         newShape: (shape) => {
             dispatch(newShapeAction(shape));
+        },
+        setNextShape: (shape) => {
+            dispatch(nextShapeAction(shape));
         },
         goDown: (gameArea, shapeCoordinate) => {
             dispatch(goDownAction(gameArea, shapeCoordinate));

@@ -40,7 +40,7 @@ class Blocks extends React.Component {
         ));
 
         return (
-            <Group test={this.props.area}>
+            <Group >
                 {ShapeComponents}
             </Group>
         );

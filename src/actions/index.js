@@ -13,6 +13,12 @@ export const newShapeAction = (shape) => ({
   shape: shape
 });
 
+export const nextShapeAction = (shape) => ({
+  type: 'NEXT_SHAPE',
+  shape: shape
+});
+
+
 export const rotateAction = (gameArea, coordinate, shape) => ({
   type: 'ROTATE',
   area: gameArea,

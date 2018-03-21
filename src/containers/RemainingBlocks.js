@@ -43,7 +43,7 @@ class RemainingBlocks extends React.Component {
         ));
 
         return (
-            <Group test={this.props.area}>
+            <Group >
                 {remainingShapes}
             </Group>
         );

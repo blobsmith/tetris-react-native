@@ -27,7 +27,7 @@ class Controller extends React.Component  {
         // Go right
         if (gestureState.vx > 0) {
           if (this.action === 'RIGHT') {
-            if ( (gestureState.moveX - this.xStart) > 7) {
+            if ( (gestureState.moveX - this.xStart) > 5) {
               this.xStart = gestureState.moveX;
               this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
             }
@@ -41,7 +41,7 @@ class Controller extends React.Component  {
         // Go left
         if (gestureState.vx < 0) {
           if (this.action === 'LEFT') {
-            if ( (this.xStart - gestureState.moveX)  > 7) {
+            if ( (this.xStart - gestureState.moveX)  > 5) {
               this.xStart = gestureState.moveX;
               this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
             }
