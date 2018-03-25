@@ -7,7 +7,12 @@ const InverseLShape = {
         [-1, 1],
     ],
 
-    color: '#819FF7'
+    color: '#819FF7',
+
+    previewOffset: {
+        x: 0,
+        y: 1,
+    },
 };
 
 export default InverseLShape;

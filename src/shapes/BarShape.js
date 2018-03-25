@@ -7,7 +7,12 @@ const BarShape = {
         [0, 3],
     ],
 
-    color: '#00FFFF'
+    color: '#00FFFF',
+
+    previewOffset: {
+        x: 0,
+        y: -1,
+    },
 };
 
 export default BarShape;

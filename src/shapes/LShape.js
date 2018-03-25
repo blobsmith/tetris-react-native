@@ -8,7 +8,12 @@ const LShape = {
     ],
 
 
-    color: '#FFA500'
+    color: '#FFA500',
+
+    previewOffset: {
+        x: -1,
+        y: 1,
+    },
 };
 
 export default LShape;

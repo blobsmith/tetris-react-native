@@ -1,6 +1,6 @@
 import React from 'react';
 import GameComponent from '../components/Game';
-
+import { AppState } from 'react-native';
 import { newShapeAction, nextShapeAction, goDownAction, newGameAction, insertShapeInAreaAction, removingWholeLinesAction } from '../actions';
 import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
@@ -8,19 +8,20 @@ import gameStat from '../services/GameStatService';
 
 class Game extends React.Component {
 
+    // Game states
+    PLAY = 'play';
+    GAME_OVER = 'gameOver';
+    INIT_POINTS = 0;
+    state = {
+        points: this.INIT_POINTS,
+        gameState: this.GAME_OVER,
+        started: false,
+        appState: AppState.currentState,
+        timer: false,
+    };
+
     constructor(props) {
         super(props);
-
-        // Game states
-        this.PLAY = 'play';
-        this.GAME_OVER = 'gameOver';
-        this.INIT_POINTS = 0;
-
-        this.state = {
-            points: this.INIT_POINTS,
-            gameState: this.GAME_OVER,
-            started: false
-        };
 
         // Set a new shape.
         this.props.newShape(blockManagement.getShapeRandomly());
@@ -30,7 +31,7 @@ class Game extends React.Component {
         this.props.newGame();
     }
 
-    prepareNewShape() {
+    prepareNewShape = () => {
         // Save last shape coordinates to the map
         this.props.saveShapeInMap(this.props.shapeCoordinate, this.props.coordinate);
 
@@ -50,12 +51,21 @@ class Game extends React.Component {
         // Create a new shape.
         this.props.newShape(Object.assign({}, this.props.nextShape));
         this.props.setNextShape(blockManagement.getShapeRandomly());
-    }
+    };
 
-    componentDidMount() {
-        var self = this;
-        self.timerID = setInterval(function() {
-            if (self.state.gameState === self.PLAY) {
+    componentWillUnmount = () => {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    };
+
+    componentDidMount = () => {
+        AppState.addEventListener('change', this._handleAppStateChange);
+        // this.setGameLooper();
+    };
+
+    setGameLooper = () => {
+        let self = this;
+        const timerID = setInterval(function() {
+            if (self.state.gameState === self.PLAY && self.state.appState === 'active') {
                 const coordinate = self.props.coordinate;
                 self.props.goDown(self.props.gameArea, self.props.shapeCoordinate);
 
@@ -70,7 +80,20 @@ class Game extends React.Component {
                 }
             }
         }, 500);
-    }
+        this.setState({timer: timerID});
+    };
+
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState !== 'active' && this.state.timer) {
+            clearTimeout(this.state.timer);
+        }
+        else {
+            this.setGameLooper();
+        }
+        this.setState({
+            appState: nextAppState
+        });
+    };
 
     playOnClick = () => {
         this.props.newGame();

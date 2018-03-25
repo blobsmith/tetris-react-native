@@ -7,7 +7,12 @@ const InverseZShape = {
         [1, -1],
     ],
 
-    color: '#FFFF00'
+    color: '#FFFF00',
+
+    previewOffset: {
+        x: 0,
+        y: 1,
+    },
 };
 
 export default InverseZShape;

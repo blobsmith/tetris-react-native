@@ -9,6 +9,11 @@ const SquareShape = {
 
     color: '#00FF00',
 
+    previewOffset: {
+        x: 0,
+        y: 0,
+    },
+
     rotate: false,
 };
 

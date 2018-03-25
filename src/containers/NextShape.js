@@ -36,8 +36,8 @@ class NextShape extends React.Component {
 
     render() {
         const coordinates = {
-            x: 3,
-            y: 2,
+            x: 4 + this.props.nextShape.previewOffset.x,
+            y: 2 + this.props.nextShape.previewOffset.y,
         };
 
         const realBlocks = blockManagement.getBlocksRealCoordinates(this.props.nextShape.blocks, coordinates, this.state.blockSize);
