@@ -13,6 +13,7 @@ class Game extends React.Component {
     GAME_OVER = 'gameOver';
     INIT_POINTS = 0;
     INIT_DELAY = 500;
+    INIT_LEVEL = 1;
     LINE_NUMBER_TO_CHANGE_LEVEL = 15;
     DELAI_IN_MS_TO_ACCELERATE = 20;
 
@@ -22,7 +23,7 @@ class Game extends React.Component {
         started: false,
         appState: AppState.currentState,
         timer: false,
-        level: 1,
+        level: this.INIT_LEVEL,
         lineCounter: 0,
         delay: this.INIT_DELAY,
         lastDelay: 0,
@@ -134,6 +135,8 @@ class Game extends React.Component {
             started: true,
             delay: this.INIT_DELAY,
             lastDelay: 0,
+            level: this.INIT_LEVEL,
+            lineCounter: 0,
         });
     };
 

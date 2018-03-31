@@ -28,7 +28,6 @@ class Controller extends React.Component  {
 
           const diff = evt.nativeEvent.locationX - this.xStart;
 
-          // console.log('diff '+diff);
           // Go right
           if (diff > 0) {
             if (this.action === 'RIGHT') {
@@ -44,14 +43,11 @@ class Controller extends React.Component  {
           }
 
           // Go left
-          // console.log('------------- Gesture '+gestureState.vx+' native '+evt.nativeEvent.locationX+' ---------------');
           if (diff < 0) {
             if (this.action === 'LEFT') {
               if ( diff  < -14) {
                 this.xStart = evt.nativeEvent.locationX;
-                // console.log('------------- START xposition '+this.xStart+' nativex '+evt.nativeEvent.locationX+' ---------------');
                 this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
-                // console.log('------------------- GO LEFT xposition '+gestureState.moveX+' diff '+(diff)+' nativex '+evt.nativeEvent.locationX+' -----------------------------');
               }
             }
             else {
@@ -65,7 +61,6 @@ class Controller extends React.Component  {
 
       onPanResponderRelease: (evt, gestureState) => {
         this.xStart = 0;
-        // console.log('------------- STOP ---------------');
         if ((evt.nativeEvent.timestamp - this.lastTouch) < 100) {
           this.props.rotate(this.props.gameArea, this.props.coordinates, this.props.shape);
         }
