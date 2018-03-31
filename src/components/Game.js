@@ -30,7 +30,7 @@ const Game = ( props ) => (
                 <GoDownButton />
             </View>
         }
-        { props.started && <Scores points={props.points} /> }
+        { props.started && <Scores points={props.points} level={props.level} /> }
         { props.gameState === 'gameOver' && <Information playOnClick={props.playOnClick} /> }
     </View>
 );

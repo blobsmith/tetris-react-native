@@ -21,39 +21,51 @@ class Controller extends React.Component  {
 
       onPanResponderGrant: (evt, gestureState) => {
         this.lastTouch = evt.nativeEvent.timestamp;
+        this.xStart = evt.nativeEvent.locationX;
       },
       onPanResponderMove: (evt, gestureState) => {
+        if (this.xStart != 0) {
 
-        // Go right
-        if (gestureState.vx > 0) {
-          if (this.action === 'RIGHT') {
-            if ( (gestureState.moveX - this.xStart) > 20) {
-              this.xStart = gestureState.moveX;
-              this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
+          const diff = evt.nativeEvent.locationX - this.xStart;
+
+          // console.log('diff '+diff);
+          // Go right
+          if (diff > 0) {
+            if (this.action === 'RIGHT') {
+              if ( diff > 14) {
+                this.xStart = evt.nativeEvent.locationX;
+                this.props.goRight(this.props.gameArea, this.props.shapeCoordinate);
+              }
             }
+            else {
+              this.xStart = evt.nativeEvent.locationX;
+            }
+            this.action = 'RIGHT';
           }
-          else {
-            this.xStart = gestureState.moveX;
+
+          // Go left
+          // console.log('------------- Gesture '+gestureState.vx+' native '+evt.nativeEvent.locationX+' ---------------');
+          if (diff < 0) {
+            if (this.action === 'LEFT') {
+              if ( diff  < -14) {
+                this.xStart = evt.nativeEvent.locationX;
+                // console.log('------------- START xposition '+this.xStart+' nativex '+evt.nativeEvent.locationX+' ---------------');
+                this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
+                // console.log('------------------- GO LEFT xposition '+gestureState.moveX+' diff '+(diff)+' nativex '+evt.nativeEvent.locationX+' -----------------------------');
+              }
+            }
+            else {
+              this.xStart = evt.nativeEvent.locationX;
+            }
+            this.action = 'LEFT';
           }
-          this.action = 'RIGHT';
         }
 
-        // Go left
-        if (gestureState.vx < 0) {
-          if (this.action === 'LEFT') {
-            if ( (this.xStart - gestureState.moveX)  > 20) {
-              this.xStart = gestureState.moveX;
-              this.props.goLeft(this.props.gameArea, this.props.shapeCoordinate);
-            }
-          }
-          else {
-            this.xStart = gestureState.moveX;
-          }
-          this.action = 'LEFT';
-        }
       },
 
       onPanResponderRelease: (evt, gestureState) => {
+        this.xStart = 0;
+        // console.log('------------- STOP ---------------');
         if ((evt.nativeEvent.timestamp - this.lastTouch) < 100) {
           this.props.rotate(this.props.gameArea, this.props.coordinates, this.props.shape);
         }
