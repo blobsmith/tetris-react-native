@@ -7,6 +7,7 @@ import Controller from '../containers/Controller';
 import GoDownButton from '../containers/GoDownButton';
 import RemainingBlocks from '../containers/RemainingBlocks';
 import NextShape from '../containers/NextShape';
+import BestScoresList from '../containers/BestScoresList';
 
 import Scores from '../components/Scores';
 import Information from '../components/Information';
@@ -30,7 +31,8 @@ const Game = ( props ) => (
                 <GoDownButton />
             </View>
         }
-        { props.started && <Scores points={props.points} level={props.level} /> }
+        { props.gameState === 'bestScores' && <BestScoresList /> }
+        { props.playedOneTime && <Scores points={props.points} level={props.level} lineNumberBeforeNextLevel={props.lineNumberBeforeNextLevel} /> }
         { props.gameState === 'gameOver' && <Information playOnClick={props.playOnClick} /> }
     </View>
 );

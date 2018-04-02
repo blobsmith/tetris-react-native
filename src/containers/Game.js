@@ -9,8 +9,9 @@ import gameStat from '../services/GameStatService';
 class Game extends React.Component {
 
     // Game states
-    PLAY = 'play';
-    GAME_OVER = 'gameOver';
+    STATE_PLAY = 'play';
+    STATE_GAME_OVER = 'gameOver';
+    STATE_BEST_SCORE = 'bestScores';
     INIT_POINTS = 0;
     INIT_DELAY = 500;
     INIT_LEVEL = 1;
@@ -19,14 +20,14 @@ class Game extends React.Component {
 
     state = {
         points: this.INIT_POINTS,
-        gameState: this.GAME_OVER,
-        started: false,
+        gameState: this.STATE_GAME_OVER,
+        playedOneTime: false,
         appState: AppState.currentState,
         timer: false,
         level: this.INIT_LEVEL,
-        lineCounter: 0,
+        lineNumberBeforeNextLevel: this.LINE_NUMBER_TO_CHANGE_LEVEL,
+        totalLineRemoved: 0,
         delay: this.INIT_DELAY,
-        lastDelay: 0,
     };
 
     constructor(props) {
@@ -55,8 +56,7 @@ class Game extends React.Component {
         // Update user points if needed.
         this.managePoints(gameStat);
 
-
-        // Create a new shape.
+        // Create a new shape. (use assign to copy the shape)
         this.props.newShape(Object.assign({}, this.props.nextShape));
         this.props.setNextShape(blockManagement.getShapeRandomly());
     };
@@ -71,18 +71,23 @@ class Game extends React.Component {
     };
 
     manageLevel = (gameStat) => {
-        const totalLinesRemoved = gameStat.countRemoved + this.state.lineCounter;
-        const level = Math.floor(totalLinesRemoved / this.LINE_NUMBER_TO_CHANGE_LEVEL);
+        let lineNumberBeforeNextLevel = this.state.lineNumberBeforeNextLevel - gameStat.countRemoved;
+        let level = this.state.level;
+        const totalLineRemoved = this.state.totalLineRemoved + gameStat.countRemoved;
+        if (lineNumberBeforeNextLevel <= 0) {
+            lineNumberBeforeNextLevel = this.state.lineNumberBeforeNextLevel + this.LINE_NUMBER_TO_CHANGE_LEVEL - gameStat.countRemoved;
+            level = level + 1;
+        }
         const delay = this.INIT_DELAY - level * this.DELAI_IN_MS_TO_ACCELERATE;
+        const changeDelay = delay !== this.state.delay;
         this.setState({
-            lineCounter: totalLinesRemoved,
-            level: level + 1,
+            lineNumberBeforeNextLevel: lineNumberBeforeNextLevel,
+            level: level,
             delay: delay,
+            totalLineRemoved: totalLineRemoved,
         });
-        if (this.state.lastDelay !== this.state.delay) {
-            this.state.lastDelay = this.state.delay;
-            clearTimeout(this.state.timer);
-            this.setGameLooper();
+        if (changeDelay) {
+            this.setGameLooper(delay);
         }
     };
 
@@ -94,10 +99,16 @@ class Game extends React.Component {
         AppState.addEventListener('change', this._handleAppStateChange);
     };
 
-    setGameLooper = () => {
-        let self = this
+    setGameLooper = (delay = null) => {
+        let self = this;
+        if (!delay) {
+            delay = self.state.delay;
+        }
+        if (this.state.timer) {
+            clearTimeout(this.state.timer);
+        }
         const timerID = setInterval(function() {
-            if (self.state.gameState === self.PLAY && self.state.appState === 'active') {
+            if (self.state.gameState === self.STATE_PLAY && self.state.appState === 'active') {
                 const coordinate = self.props.coordinate;
                 self.props.goDown(self.props.gameArea, self.props.shapeCoordinate);
 
@@ -107,11 +118,12 @@ class Game extends React.Component {
 
                     // If last coordinates are the same than shape coordinate at the beginning, it's game over.
                     if (coordinate.y === self.props.coordinate.y) {
-                        self.setState({gameState: self.GAME_OVER});
+                        clearTimeout(self.state.timer);
+                        self.setState({gameState: self.STATE_GAME_OVER});
                     }
                 }
             }
-        }, self.state.delay);
+        }, delay);
         this.setState({timer: timerID});
     };
 
@@ -131,13 +143,14 @@ class Game extends React.Component {
         this.props.newGame();
         this.setState({
             points: this.INIT_POINTS,
-            gameState: this.PLAY,
-            started: true,
-            delay: this.INIT_DELAY,
-            lastDelay: 0,
+            gameState: this.STATE_PLAY,
+            playedOneTime: true,
             level: this.INIT_LEVEL,
-            lineCounter: 0,
+            lineNumberBeforeNextLevel: this.LINE_NUMBER_TO_CHANGE_LEVEL,
+            totalLineRemoved: 0,
+            delay: this.INIT_DELAY,
         });
+        this.setGameLooper(this.INIT_DELAY);
     };
 
     render() {
@@ -147,7 +160,8 @@ class Game extends React.Component {
                 points={this.state.points}
                 level={this.state.level}
                 playOnClick={this.playOnClick}
-                started={this.state.started}
+                playedOneTime={this.state.playedOneTime}
+                lineNumberBeforeNextLevel={this.state.lineNumberBeforeNextLevel}
             />
         );
     }
