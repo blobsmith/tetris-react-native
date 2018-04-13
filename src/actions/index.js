@@ -50,3 +50,23 @@ export const removingWholeLinesAction = (gameArea, gameStat) => ({
   gameStat: gameStat
 });
 
+export const loadScoresAction = (scores) => ({
+  type: 'LOAD_SCORES',
+  scores: scores,
+});
+
+export const newScoreAction = (score = false) => ({
+  type: 'NEW_SCORE',
+  score: score,
+});
+
+export const wfNextStateAction = (bestScores = false, points = false) => ({
+  type: 'WF_NEXT_STATE',
+  bestScores: bestScores,
+  points: points,
+});
+
+export const wfSetStateAction = (state) => ({
+  type: 'WF_SET_STATE',
+  state: state,
+});

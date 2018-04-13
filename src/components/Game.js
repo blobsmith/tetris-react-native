@@ -10,12 +10,14 @@ import NextShape from '../containers/NextShape';
 import BestScoresList from '../containers/BestScoresList';
 
 import Scores from '../components/Scores';
-import Information from '../components/Information';
+import Information from '../containers/Information';
+
+import {STATE_PLAY, STATE_INSTRUCTION, STATE_BEST_SCORE, STATE_SET_SCORE} from '../reducers/workflow'
 
 const Game = ( props ) => (
     <View style={styles.game} >
-        { props.gameState === 'play' && <NextShape /> }
-        { props.gameState === 'play' &&
+        { props.wfState === STATE_PLAY && <NextShape /> }
+        { props.wfState === STATE_PLAY &&
             <View style={styles.imageContainer} >
                 <View>
                     <Image
@@ -31,9 +33,9 @@ const Game = ( props ) => (
                 <GoDownButton />
             </View>
         }
-        { props.gameState === 'bestScores' && <BestScoresList /> }
-        { props.playedOneTime && <Scores points={props.points} level={props.level} lineNumberBeforeNextLevel={props.lineNumberBeforeNextLevel} /> }
-        { props.gameState === 'gameOver' && <Information playOnClick={props.playOnClick} /> }
+        { (props.wfState === STATE_BEST_SCORE || props.wfState === STATE_SET_SCORE ) && <BestScoresList playOnClick={props.playOnClick} points={props.points} level={props.level} /> }
+        { props.wfState === STATE_PLAY && <Scores points={props.points} level={props.level} lineNumberBeforeNextLevel={props.lineNumberBeforeNextLevel} /> }
+        { props.wfState === STATE_INSTRUCTION && <Information playOnClick={props.playOnClick} /> }
     </View>
 );
 

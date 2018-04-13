@@ -1,17 +1,21 @@
 import React from 'react';
 import GameComponent from '../components/Game';
 import { AppState } from 'react-native';
-import { newShapeAction, nextShapeAction, goDownAction, newGameAction, insertShapeInAreaAction, removingWholeLinesAction } from '../actions';
+import {
+    newShapeAction, nextShapeAction,
+    goDownAction, newGameAction,
+    insertShapeInAreaAction, removingWholeLinesAction,
+    wfSetStateAction, wfNextStateAction
+} from '../actions';
 import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
 import gameStat from '../services/GameStatService';
 
+import {STATE_PLAY} from '../reducers/workflow'
+
 class Game extends React.Component {
 
     // Game states
-    STATE_PLAY = 'play';
-    STATE_GAME_OVER = 'gameOver';
-    STATE_BEST_SCORE = 'bestScores';
     INIT_POINTS = 0;
     INIT_DELAY = 500;
     INIT_LEVEL = 1;
@@ -20,8 +24,6 @@ class Game extends React.Component {
 
     state = {
         points: this.INIT_POINTS,
-        gameState: this.STATE_GAME_OVER,
-        playedOneTime: false,
         appState: AppState.currentState,
         timer: false,
         level: this.INIT_LEVEL,
@@ -33,11 +35,12 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
+        this.props.wfSetState('instruction');
+
         // Set a new shape.
         this.props.newShape(blockManagement.getShapeRandomly());
         this.props.setNextShape(blockManagement.getShapeRandomly());
 
-        // Set a new game.
         this.props.newGame();
     }
 
@@ -108,7 +111,7 @@ class Game extends React.Component {
             clearTimeout(this.state.timer);
         }
         const timerID = setInterval(function() {
-            if (self.state.gameState === self.STATE_PLAY && self.state.appState === 'active') {
+            if (self.props.wfState === STATE_PLAY && self.state.appState === 'active') {
                 const coordinate = self.props.coordinate;
                 self.props.goDown(self.props.gameArea, self.props.shapeCoordinate);
 
@@ -119,7 +122,7 @@ class Game extends React.Component {
                     // If last coordinates are the same than shape coordinate at the beginning, it's game over.
                     if (coordinate.y === self.props.coordinate.y) {
                         clearTimeout(self.state.timer);
-                        self.setState({gameState: self.STATE_GAME_OVER});
+                        self.props.wfSetNextState(self.props.bestScores, self.state.points);
                     }
                 }
             }
@@ -143,30 +146,35 @@ class Game extends React.Component {
         this.props.newGame();
         this.setState({
             points: this.INIT_POINTS,
-            gameState: this.STATE_PLAY,
-            playedOneTime: true,
             level: this.INIT_LEVEL,
             lineNumberBeforeNextLevel: this.LINE_NUMBER_TO_CHANGE_LEVEL,
             totalLineRemoved: 0,
             delay: this.INIT_DELAY,
         });
+        this.props.wfSetState('play');
         this.setGameLooper(this.INIT_DELAY);
+    };
+
+    bestScoresOnClick = () => {
+        this.props.wfSetState('bestScores');
+    };
+
+    instructonsOnClick = () => {
+        this.props.wfSetState('instruction');
     };
 
     render() {
         return (
             <GameComponent
-                gameState={this.state.gameState}
                 points={this.state.points}
                 level={this.state.level}
-                playOnClick={this.playOnClick}
-                playedOneTime={this.state.playedOneTime}
                 lineNumberBeforeNextLevel={this.state.lineNumberBeforeNextLevel}
+                wfState={this.props.wfState}
+                playOnClick={this.playOnClick}
             />
         );
     }
 }
-
 
 const mapStatesToProps = (state) => {
     return {
@@ -174,7 +182,9 @@ const mapStatesToProps = (state) => {
         shapeCoordinate: state.shapeCoordinate,
         gameArea: state.area,
         shape: state.shape,
-        nextShape: state.nextShape
+        nextShape: state.nextShape,
+        bestScores: state.bestScores,
+        wfState: state.wfState,
     }
 };
 
@@ -197,7 +207,13 @@ const mapDispatchToProps = (dispatch) => {
         },
         removingWholeLines: (gameArea, results) => {
             dispatch(removingWholeLinesAction(gameArea, results));
-        }
+        },
+        wfSetNextState: (bestScores = false, points = false) => {
+            dispatch(wfNextStateAction(bestScores, points));
+        },
+        wfSetState: (stateName) => {
+            dispatch(wfSetStateAction(stateName));
+        },
     }
 };
 

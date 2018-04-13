@@ -27,6 +27,13 @@ const Information = ( props ) => (
                     color="#00d8ff"
                 />
             </View>
+            <View style={styles.buttonContainer}>
+                <Button
+                    onPress={props.bestScoresOnClick}
+                    title="High scores"
+                    color="#aacc00"
+                />
+            </View>
 
             <Text style={styles.title} >
                 Application details
@@ -77,8 +84,8 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     buttonContainer: {
-        marginTop: 20,
-        marginBottom: 10,
+        marginTop: 5,
+        marginBottom: 5,
         backgroundColor: 'black',
         padding: 2
     },

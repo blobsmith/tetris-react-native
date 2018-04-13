@@ -1,29 +1,34 @@
 import React  from 'react';
-import { goDownAction } from '../actions';
+import { loadScoresAction, newScoreAction, wfSetStateAction, wfNextStateAction } from '../actions';
 import { connect } from 'react-redux';
 import BestScoreRow from "../components/BestScoreRow";
-import { View, FlatList, Text, ScrollView, StyleSheet } from 'react-native';
+import BestScoresListComponent from "../components/BestScoresList";
+import scoreService from '../services/ScoreService';
 
 class BestScoresList extends React.Component  {
 
-  data = [
-    {
-      position: 1,
-      uuid: 'fdk3d-eefed',
-      deviceid: 'kkldff-dfdfr',
-      name: 'Olivier',
-      points: 200,
-      level: 2,
-    },
-    {
-      position: 2,
-      uuid: 'fdk3d-eefes',
-      deviceid: 'kkldff-dfdfr',
-      name: 'OlivierG',
-      points: 160,
-      level: 2,
-    },
-  ];
+  state = {
+    textinput: '',
+  };
+
+  _saveScore = () => {
+    if (this.state.textinput !== ''){
+      // addNewScore
+
+      const score = scoreService.createScore(this.state.textinput, this.props.points, this.props.level);
+      this.props.addNewScore(score);
+      this.props.wfSetNextState();
+    }
+
+    // Save user name if needed
+
+  };
+
+  _changeTextInputValue = (text) => {
+    this.setState({
+      textinput: text
+    });
+  };
 
   _renderItem = ({ item }) => (
     <BestScoreRow
@@ -32,50 +37,56 @@ class BestScoresList extends React.Component  {
         points={item.points}
         level={item.level}
     />
-);
+  );
+
+  instructionOnClick = () => {
+    this.props.wfSetState('instruction');
+  };
+
+  componentWillMount = () => {
+    // Loading scoreList from disk
+    scoreService.loadBestScoresFromDisk(this.props.loadScores);
+  };
 
   render() {
+
     return (
-      <View>
-        <View style={styles.sectionTitle}>
-          <Text style={styles.title} >Your hightscores</Text>
-        </View>
-            <ScrollView>
-            <FlatList
-                data={this.data}
-                renderItem={this._renderItem}
-                keyExtractor={item => item.uuid}
-            />
-        </ScrollView>
-      </View>
+      <BestScoresListComponent
+        wfState={this.props.wfState}
+        textInputValue={this.state.textinput}
+        submitFunction={this._saveScore}
+        changeTextInputValue={this._changeTextInputValue}
+        sortedScores={scoreService.sortScores(this.props.bestScores)}
+        rows={this._renderItem}
+        playOnClick={this.props.playOnClick}
+        instructionOnClick={this.instructionOnClick}
+        points={this.props.points}
+        level={this.props.level}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  sectionTitle: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  title: {
-    fontSize: 18,
-    color: "grey",
-    fontWeight: "bold",
-  },
-});
-
 const mapStatesToProps = (state) => {
   return {
-    shapeCoordinate: state.shapeCoordinate,
-    gameArea: state.area,
+    bestScores: state.bestScores,
+    wfState: state.wfState,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goDown: (gameArea, shapeCoordinate) => {
-      dispatch(goDownAction(gameArea, shapeCoordinate));
+    loadScores: (scores) => {
+      dispatch(loadScoresAction(scores));
+    },
+    addNewScore: (score) => {
+      dispatch(newScoreAction(score));
+    },
+    wfSetState: (stateName) => {
+      dispatch(wfSetStateAction(stateName));
+    },
+    wfSetNextState: () => {
+      dispatch(wfNextStateAction());
     },
   }
 };

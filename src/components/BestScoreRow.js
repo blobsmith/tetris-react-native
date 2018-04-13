@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     primaryText: {
         fontWeight: "bold",
-        fontSize: 14,
+        fontSize: 16,
         color: "black",
         marginBottom: 4
     },
@@ -52,5 +52,5 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "black",
         fontWeight: "bold",
-    }
+    },
 });
