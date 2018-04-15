@@ -1,14 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Linking, ScrollView, Button } from 'react-native';
 
+import Navigation from '../containers/Navigation';
+
+import {globalStyle} from '../Style/globalStyle';
+
 const Information = ( props ) => (
-    <View style={styles.information}  >
+    <View style={globalStyle.pageContainer}  >
+        <Navigation playOnClick={props.playOnClick} />
         <ScrollView style={styles.contentContainer}>
             <Text style={styles.title} >
                 Instructions
             </Text>
             <Text style={styles.list}  >
-                - Move you finger right or left to move the piece.
+                - Move your finger right or left to move the piece.
             </Text>
             <Text style={styles.list}  >
                 - Ride down on the "fall down" bar to go down the piece.
@@ -17,23 +22,8 @@ const Information = ( props ) => (
                 - Simple tap on the game area to rotate the piece.
             </Text>
             <Text style={styles.list}  >
-                - Click on play below to start.
+                - Click on play above to start.
             </Text>
-
-            <View style={styles.buttonContainer}>
-                <Button
-                    onPress={props.playOnClick}
-                    title="play"
-                    color="#00d8ff"
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    onPress={props.bestScoresOnClick}
-                    title="High scores"
-                    color="#aacc00"
-                />
-            </View>
 
             <Text style={styles.title} >
                 Application details
@@ -55,24 +45,21 @@ const Information = ( props ) => (
             <Text style={styles.link} onPress={() => Linking.openURL('https://www.linkedin.com/in/gilbertolivier/')} >
                 You can contact me on LinkedIn
             </Text>
-
         </ScrollView>
     </View>
 );
 
 const styles = StyleSheet.create({
-    information: {
-        padding: 10
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 15,
+        marginTop: 10,
     },
     text: {
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 10,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 15,
     },
     link: {
         fontSize: 14,
@@ -83,11 +70,19 @@ const styles = StyleSheet.create({
     contentContainer: {
         height: '100%'
     },
+    buttonsContainer: {
+        height: 30,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        flex: 0.1,
+        width: '100%',
+    },
     buttonContainer: {
-        marginTop: 5,
-        marginBottom: 5,
-        backgroundColor: 'black',
-        padding: 2
+        width: '33%',
+        padding: 1,
+    },
+    button: {
+        width: '100%'
     },
     list: {
         fontSize: 14,

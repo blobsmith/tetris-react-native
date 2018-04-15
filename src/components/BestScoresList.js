@@ -1,27 +1,16 @@
 import React from "react";
 import { View, FlatList, Text, ScrollView, StyleSheet, Button } from 'react-native';
+import Navigation from '../containers/Navigation';
+
+import {globalStyle} from '../Style/globalStyle';
 
 const BestScoreList = (props) => (
-    <View style={styles.highScores} >
-        <Text style={styles.title} >Your top 10 high scores</Text>
-        <View >
-            <View style={styles.buttonContainer}>
-                <Button
-                    onPress={props.playOnClick}
-                    title="play"
-                    color="#00d8ff"
-                />
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <Button
-                    onPress={props.instructionOnClick}
-                    title="instructions"
-                    color="gray"
-                />
-            </View>
+    <View style={[globalStyle.pageContainer, styles.highScores]} >
+        <Navigation playOnClick={props.playOnClick} />
+        <View style={styles.titleContainer} >
+            <Text style={styles.title} >Your top 10 high scores</Text>
         </View>
-      <ScrollView>
+      <ScrollView >
         <FlatList
             data={props.sortedScores}
             renderItem={props.rows}
@@ -33,18 +22,17 @@ const BestScoreList = (props) => (
 
 const styles = StyleSheet.create({
     highScores: {
-        padding: 10
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+    },
+    titleContainer: {
+        height: 30,
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 15,
-    },
-    buttonContainer: {
-        marginTop: 5,
-        marginBottom: 5,
-        backgroundColor: 'black',
-        padding: 2
     },
 });
 

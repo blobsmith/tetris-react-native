@@ -9,6 +9,11 @@ import scoreService from '../services/ScoreService';
 
 class BestScoresList extends React.Component  {
 
+  componentWillMount = () => {
+    // Loading scoreList from disk
+    scoreService.loadBestScoresFromDisk(this.props.loadScores);
+  };
+
   _renderItem = ({ item }) => (
     <BestScoreRow
         position={item.position}
@@ -18,22 +23,12 @@ class BestScoresList extends React.Component  {
     />
   );
 
-  instructionOnClick = () => {
-    this.props.wfSetState('instruction');
-  };
-
-  componentWillMount = () => {
-    // Loading scoreList from disk
-    scoreService.loadBestScoresFromDisk(this.props.loadScores);
-  };
-
   render() {
     return (
       <BestScoresListComponent
         sortedScores={scoreService.sortScores(this.props.bestScores)}
         rows={this._renderItem}
         playOnClick={this.props.playOnClick}
-        instructionOnClick={this.instructionOnClick}
       />
     );
   }

@@ -1,9 +1,15 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
+import {STYLE_REACT_COLOR} from '../Style/globalStyle';
+
 export default (BestScoreRow = props => (
     <View style={styles.row}>
-        <Text style={styles.position} >{props.position}</Text>
+        <View style={styles.position} >
+            { props.position > 9 && <Text style={[styles.positionText, styles.twoDigit]} >{props.position}</Text>}
+            { props.position <= 9 && <Text style={[styles.positionText, styles.oneDigit]} >{props.position}</Text>}
+
+        </View>
         <View>
             <Text style={styles.primaryText}>
                 {props.name}
@@ -12,6 +18,7 @@ export default (BestScoreRow = props => (
         </View>
         <Text style={styles.points} >{props.points} points</Text>
     </View>
+
 ));
 
 
@@ -24,18 +31,26 @@ const styles = StyleSheet.create({
     },
     position: {
         backgroundColor: 'black',
-        color: 'white',
         width: 50,
         height: 50,
         borderRadius: 25,
         borderStyle: 'solid',
-        borderColor: '#00d8ff',
+        borderColor: STYLE_REACT_COLOR,
         borderWidth: 2,
         marginRight: 18,
-        paddingLeft: 20,
-        paddingTop: 10,
+    },
+    oneDigit: {
+        right: 17,
+    },
+    twoDigit: {
+        right: 12,
+    },
+    positionText: {
+        position: 'absolute',
+        top: 9,
         fontWeight: 'bold',
         fontSize: 18,
+        color: 'white',
     },
     primaryText: {
         fontWeight: "bold",
