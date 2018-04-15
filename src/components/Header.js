@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 const Header = ( props ) => (
     <View style={styles.header} >
         <Image style={styles.image}  source={require('../images/logo.png')} />
-        <Text style={styles.title} >Tetris made with React-native</Text>
+        <Text style={styles.title} >Game made with React-native</Text>
     </View>
 );
 
