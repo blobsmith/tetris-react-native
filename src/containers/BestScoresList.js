@@ -1,34 +1,13 @@
 import React  from 'react';
-import { loadScoresAction, newScoreAction, wfSetStateAction, wfNextStateAction } from '../actions';
+import { loadScoresAction, wfSetStateAction, wfNextStateAction } from '../actions';
 import { connect } from 'react-redux';
+
 import BestScoreRow from "../components/BestScoreRow";
 import BestScoresListComponent from "../components/BestScoresList";
+
 import scoreService from '../services/ScoreService';
 
 class BestScoresList extends React.Component  {
-
-  state = {
-    textinput: '',
-  };
-
-  _saveScore = () => {
-    if (this.state.textinput !== ''){
-      // addNewScore
-
-      const score = scoreService.createScore(this.state.textinput, this.props.points, this.props.level);
-      this.props.addNewScore(score);
-      this.props.wfSetNextState();
-    }
-
-    // Save user name if needed
-
-  };
-
-  _changeTextInputValue = (text) => {
-    this.setState({
-      textinput: text
-    });
-  };
 
   _renderItem = ({ item }) => (
     <BestScoreRow
@@ -49,19 +28,12 @@ class BestScoresList extends React.Component  {
   };
 
   render() {
-
     return (
       <BestScoresListComponent
-        wfState={this.props.wfState}
-        textInputValue={this.state.textinput}
-        submitFunction={this._saveScore}
-        changeTextInputValue={this._changeTextInputValue}
         sortedScores={scoreService.sortScores(this.props.bestScores)}
         rows={this._renderItem}
         playOnClick={this.props.playOnClick}
         instructionOnClick={this.instructionOnClick}
-        points={this.props.points}
-        level={this.props.level}
       />
     );
   }
@@ -78,9 +50,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadScores: (scores) => {
       dispatch(loadScoresAction(scores));
-    },
-    addNewScore: (score) => {
-      dispatch(newScoreAction(score));
     },
     wfSetState: (stateName) => {
       dispatch(wfSetStateAction(stateName));

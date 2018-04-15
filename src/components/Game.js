@@ -8,11 +8,12 @@ import GoDownButton from '../containers/GoDownButton';
 import RemainingBlocks from '../containers/RemainingBlocks';
 import NextShape from '../containers/NextShape';
 import BestScoresList from '../containers/BestScoresList';
+import EnterYourName from '../containers/EnterYourName';
 
 import Scores from '../components/Scores';
 import Information from '../containers/Information';
 
-import {STATE_PLAY, STATE_INSTRUCTION, STATE_BEST_SCORE, STATE_SET_SCORE} from '../reducers/workflow'
+import { STATE_PLAY, STATE_INSTRUCTION, STATE_BEST_SCORE, STATE_SET_SCORE } from '../reducers/workflow'
 
 const Game = ( props ) => (
     <View style={styles.game} >
@@ -33,7 +34,8 @@ const Game = ( props ) => (
                 <GoDownButton />
             </View>
         }
-        { (props.wfState === STATE_BEST_SCORE || props.wfState === STATE_SET_SCORE ) && <BestScoresList playOnClick={props.playOnClick} points={props.points} level={props.level} /> }
+        { props.wfState === STATE_BEST_SCORE && <BestScoresList playOnClick={props.playOnClick} /> }
+        { props.wfState === STATE_SET_SCORE && <EnterYourName points={props.points} level={props.level} /> }
         { props.wfState === STATE_PLAY && <Scores points={props.points} level={props.level} lineNumberBeforeNextLevel={props.lineNumberBeforeNextLevel} /> }
         { props.wfState === STATE_INSTRUCTION && <Information playOnClick={props.playOnClick} /> }
     </View>
