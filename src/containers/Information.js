@@ -5,13 +5,9 @@ import InformationComponent from "../components/Information";
 
 class Information extends React.Component  {
 
-  bestScoresOnClick = () => {
-    this.props.wfSetState('bestScores');
-  };
-
   render() {
     return (
-      <InformationComponent playOnClick={this.props.playOnClick} bestScoresOnClick={this.bestScoresOnClick} />
+      <InformationComponent playOnClick={this.props.playOnClick} />
     );
   }
 }

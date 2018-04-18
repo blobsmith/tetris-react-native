@@ -4,16 +4,16 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './src/reducers'
 
-import AppComponent from './src/components/App';
+import App from './src/containers/App';
 
 const store = createStore(reducer);
 
-export default class App extends React.Component {
+export default class Boot extends React.Component {
 
   render() {
     return (
         <Provider store={store}>
-          <AppComponent />
+          <App />
         </Provider>
     );
   }

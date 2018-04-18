@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import Boot from './Boot';
 
-AppRegistry.registerComponent('oliviergtetris', () => App);
+AppRegistry.registerComponent('oliviergtetris', () => Boot);

@@ -1,26 +1,26 @@
 import scoreService from '../services/ScoreService';
 
+export const STATE_INTRO = 'intro';
 export const STATE_PLAY = 'play';
 export const STATE_INSTRUCTION = 'instruction';
 export const STATE_BEST_SCORE = 'bestScores';
 export const STATE_SET_SCORE = 'setScore';
-export const STATE_APP_START = '';
 
 const states = [
-    STATE_APP_START,
+    STATE_INTRO,
     STATE_PLAY,
     STATE_INSTRUCTION,
     STATE_BEST_SCORE,
     STATE_SET_SCORE
 ];
 
-export const workflowReducer = (state = '', action) => {
+export const workflowReducer = (state = STATE_INTRO, action) => {
     let nextState = state;
     switch(action.type) {
 
         case 'WF_NEXT_STATE':
             switch(state) {
-                case STATE_APP_START:
+                case STATE_INTRO:
                     nextState = STATE_INSTRUCTION;
                     break;
 

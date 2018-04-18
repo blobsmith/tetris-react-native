@@ -9,11 +9,6 @@ import scoreService from '../services/ScoreService';
 
 class BestScoresList extends React.Component  {
 
-  componentWillMount = () => {
-    // Loading scoreList from disk
-    scoreService.loadBestScoresFromDisk(this.props.loadScores);
-  };
-
   _renderItem = ({ item }) => (
     <BestScoreRow
         position={item.position}
@@ -43,9 +38,6 @@ const mapStatesToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadScores: (scores) => {
-      dispatch(loadScoresAction(scores));
-    },
     wfSetState: (stateName) => {
       dispatch(wfSetStateAction(stateName));
     },

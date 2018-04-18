@@ -155,14 +155,6 @@ class Game extends React.Component {
         this.setGameLooper(this.INIT_DELAY);
     };
 
-    bestScoresOnClick = () => {
-        this.props.wfSetState('bestScores');
-    };
-
-    instructonsOnClick = () => {
-        this.props.wfSetState('instruction');
-    };
-
     render() {
         return (
             <GameComponent

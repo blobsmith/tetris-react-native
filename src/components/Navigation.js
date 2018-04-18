@@ -18,7 +18,7 @@ const Navigation = ( props ) => (
                     color={props.wfState === STATE_BEST_SCORE?STYLE_MENU_COLOR_ACTIVE:STYLE_MENU_COLOR}
             />
         </View>
-        <View style={styles.buttonContainerPlay}>
+        <View style={styles.buttonContainer}>
             <Button onPress={props.playOnClick}
                     title="play"
                     color="gray"
@@ -36,11 +36,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     buttonContainer: {
-        width: '40%',
-        padding: 1,
-    },
-    buttonContainerPlay: {
-        width: '20%',
+        width: '33%',
         padding: 1,
     },
 });
