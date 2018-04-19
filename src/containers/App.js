@@ -1,5 +1,5 @@
 import React  from 'react';
-import { wfNextStateAction, loadScoresAction } from '../actions';
+import { wfNextStateAction, loadScoresAction, loadDeviceIdAction } from '../actions';
 import { connect } from 'react-redux';
 import { View, Image, Text, StyleSheet, TouchableHighlight } from 'react-native';
 
@@ -20,6 +20,9 @@ class App extends React.Component  {
   componentWillMount = () => {
     // Loading scoreList from disk
     scoreService.loadBestScoresFromDisk(this.props.loadScores);
+
+    // Loading device id from disk
+    scoreService.loadDeviceIdFromDisk(this.props.loadDeviceId);
 
     // Just for presentation
     let self = this;
@@ -121,6 +124,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadScores: (scores) => {
       dispatch(loadScoresAction(scores));
+    },
+    loadDeviceId: (deviceId) => {
+      dispatch(loadDeviceIdAction(deviceId));
     },
     wfSetNextState: () => {
       dispatch(wfNextStateAction());

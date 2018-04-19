@@ -19,7 +19,7 @@ class Game extends React.Component {
     INIT_POINTS = 0;
     INIT_DELAY = 500;
     INIT_LEVEL = 1;
-    LINE_NUMBER_TO_CHANGE_LEVEL = 15;
+    LINE_NUMBER_TO_CHANGE_LEVEL = 10;
     DELAI_IN_MS_TO_ACCELERATE = 20;
 
     state = {
@@ -151,7 +151,7 @@ class Game extends React.Component {
             totalLineRemoved: 0,
             delay: this.INIT_DELAY,
         });
-        this.props.wfSetState('play');
+        this.props.wfSetState(STATE_PLAY);
         this.setGameLooper(this.INIT_DELAY);
     };
 

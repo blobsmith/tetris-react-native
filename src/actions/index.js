@@ -55,6 +55,11 @@ export const loadScoresAction = (scores) => ({
   scores: scores,
 });
 
+export const loadDeviceIdAction = (deviceId) => ({
+  type: 'LOAD_DEVICE_ID',
+  deviceId: deviceId,
+});
+
 export const newScoreAction = (score = false) => ({
   type: 'NEW_SCORE',
   score: score,

@@ -5,6 +5,7 @@ import areaReducer from './area'
 import shapeReducer from './shape'
 import nextShapeReducer from './nextShape'
 import bestScoresReducer from './bestScores'
+import deviceIdReducer from './deviceId'
 import {workflowReducer} from './workflow'
 
 const tetrisReducers = combineReducers({
@@ -14,6 +15,7 @@ const tetrisReducers = combineReducers({
   shape: shapeReducer,
   nextShape: nextShapeReducer,
   bestScores: bestScoresReducer,
+  deviceId: deviceIdReducer,
   wfState: workflowReducer,
 });
 

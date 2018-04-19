@@ -5,7 +5,19 @@ import { AsyncStorage } from 'react-native';
  */
 class ScoreService {
 
+  /**
+   * Number of scores to store in the device
+   *
+   * @type {number}
+   */
   maxStoredScores = 10;
+
+  /**
+   * UUID of device. (changed for each game removal and re-installation)
+   *
+   * @type {string}
+   */
+  deviceId = null;
 
   /**
    * Generate an UUID
@@ -60,7 +72,7 @@ class ScoreService {
   createScore = (name, points, level) => {
     const score = {
       uuid: this.generateUUID(),
-      deviceId: 'to-be-defined',
+      deviceId: this.deviceId,
       name: name,
       points: points,
       level: level,
@@ -116,6 +128,7 @@ class ScoreService {
       AsyncStorage.getItem('tetris:ScoreList').then((data) => {
         if (data !== null) {
           callback(JSON.parse(data));
+          console.log(JSON.parse(data));
         }
       });
     } catch (error) {
@@ -130,6 +143,27 @@ class ScoreService {
     } catch (error) {
       // Error saving data
       console.log(error);
+    }
+  }
+
+  loadDeviceIdFromDisk (callback) {
+    let self = this;
+    try {
+      AsyncStorage.getItem('tetris:deviceId').then((data) => {
+        if (data !== null) {
+          self.deviceId = data;
+          callback(data);
+        }
+        else {
+          const uuid = this.generateUUID();
+          self.deviceId = uuid;
+          AsyncStorage.setItem('tetris:deviceId', uuid);
+          callback(uuid);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   }
 }

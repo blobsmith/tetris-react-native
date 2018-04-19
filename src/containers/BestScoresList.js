@@ -1,5 +1,5 @@
 import React  from 'react';
-import { loadScoresAction, wfSetStateAction, wfNextStateAction } from '../actions';
+import { wfSetStateAction, wfNextStateAction } from '../actions';
 import { connect } from 'react-redux';
 
 import BestScoreRow from "../components/BestScoreRow";
