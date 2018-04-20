@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { View, PanResponder, StyleSheet, Image, Text } from 'react-native';
 
+import {STYLE_REACT_COLOR} from '../Style/globalStyle';
+
 class GoDownButton extends React.Component  {
 
   componentWillMount () {
@@ -16,6 +18,14 @@ class GoDownButton extends React.Component  {
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
+      onPanResponderGrant: (evt, gestureState) => {
+        this.pressed = true;
+        this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
+      },
+
+      onPanResponderRelease: (evt, gestureState) => {
+        this.pressed = false;
+      },
       onPanResponderMove: (evt, gestureState) => {
         this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
       },
@@ -23,11 +33,14 @@ class GoDownButton extends React.Component  {
   }
 
   render() {
+    if (this.pressed) {
+      this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
+    }
     return (
-      <View style={styles.button} {...this.panResponder.panHandlers} >
-        <Text style={styles.text} >FALL DOWN</Text>
-        <Image style={styles.image} source={require('../images/fall-down-bar.png')} />
-      </View>
+    <View style={styles.goDownContainer} {...this.panResponder.panHandlers} >
+      <Text style={styles.fallText} >FALL</Text>
+      <Text style={styles.downText} >DOWN</Text>
+    </View>
     );
   }
 }
@@ -44,17 +57,32 @@ const styles = StyleSheet.create({
   image: {
     zIndex: 29,
   },
-  text: {
-    zIndex: 40,
-    top: 103,
-    left: -103,
+  goDownContainer: {
+    backgroundColor: 'black',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderStyle: 'solid',
+    borderColor: STYLE_REACT_COLOR,
+    borderWidth: 2,
     position: 'absolute',
-    transform: [{ rotate: '90deg'}],
-    color: 'white',
+    left: 2,
+  },
+  fallText: {
+    position: 'absolute',
+    top: 12,
+    left: 18,
     fontWeight: 'bold',
-    fontSize: 30,
-    height: 150,
-    width: 170,
+    fontSize: 18,
+    color: 'white',
+  },
+  downText: {
+    position: 'absolute',
+    top: 32,
+    left: 12,
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
   },
 });
 

@@ -8,17 +8,15 @@ export default (BestScoreRow = props => (
         <View style={styles.position} >
             { props.position > 9 && <Text style={[styles.positionText, styles.twoDigit]} >{props.position}</Text>}
             { props.position <= 9 && <Text style={[styles.positionText, styles.oneDigit]} >{props.position}</Text>}
-
         </View>
         <View>
-            <Text style={styles.primaryText}>
+            <Text style={styles.primaryText} color="white">
                 {props.name}
             </Text>
             <Text style={styles.secondaryText}>Level {props.level}</Text>
         </View>
         <Text style={styles.points} >{props.points} points</Text>
     </View>
-
 ));
 
 
@@ -53,10 +51,11 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     primaryText: {
+        color: 'white',
         fontWeight: "bold",
         fontSize: 16,
-        color: "black",
-        marginBottom: 4
+        marginBottom: 4,
+        zIndex: 300,
     },
     secondaryText: {
         color: "grey"
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 12,
         fontSize: 18,
-        color: "black",
+        color: "white",
         fontWeight: "bold",
     },
 });

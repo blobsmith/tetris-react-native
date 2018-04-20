@@ -43,7 +43,7 @@ class App extends React.Component  {
     const intro =
           <View style={styles.container} >
             <View style={styles.version}>
-              <Text style={styles.textVersion}>v1.9</Text>
+              <Text style={styles.textVersion}>v1.10</Text>
             </View>
             <TouchableHighlight onPress={this.props.wfSetNextState} >
             <Image style={styles.image} source={require('../images/yabloga-intro.png')} />

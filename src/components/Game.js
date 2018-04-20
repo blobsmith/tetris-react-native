@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 500,
         flex: 1,
+        backgroundColor: 'black',
     },
     imageContainer: {
         flex: 1,

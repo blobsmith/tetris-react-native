@@ -4,6 +4,7 @@ import { Surface, Group } from 'ReactNativeART';
 
 import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
+import {STYLE_REACT_COLOR} from '../Style/globalStyle';
 
 class NextShape extends React.Component {
 
@@ -61,13 +62,13 @@ class NextShape extends React.Component {
 
 const styles = StyleSheet.create({
     nextShapeContainer: {
-        borderWidth: 1,
+        borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: 'black',
+        borderColor: STYLE_REACT_COLOR,
         position: 'absolute',
         width: 70,
         height: 105,
-        left: 3,
+        right: 4,
         top: 40,
     },
     label: {
