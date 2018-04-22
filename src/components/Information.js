@@ -4,46 +4,47 @@ import { View, Text, StyleSheet, Image, Linking, ScrollView, Button } from 'reac
 import Navigation from '../containers/Navigation';
 
 import {globalStyle} from '../Style/globalStyle';
+import I18n from '../services/i18n';
 
 const Information = ( props ) => (
     <View style={globalStyle.pageContainer}  >
         <Navigation playOnClick={props.playOnClick} />
         <ScrollView style={styles.contentContainer}>
             <Text style={styles.title} >
-                Instructions
+                {I18n.t('Instructions')}
             </Text>
             <Text style={styles.list}  >
-                - Move your finger right or left to move the piece.
+                - {I18n.t('Move your finger right or left')}
             </Text>
             <Text style={styles.list}  >
-                - Push the "fall down" button to go down the piece.
+                - {I18n.t('Push the "fall down" button')}
             </Text>
             <Text style={styles.list}  >
-                - Simple tap on the game area to rotate the piece.
+                - {I18n.t('Simple tap on the game area')}
             </Text>
             <Text style={styles.list}  >
-                - Click on play above to start.
+                - {I18n.t('Click on play')}
             </Text>
 
             <Text style={styles.titleDetail} >
-                Application details
+                {I18n.t('Application details')}
             </Text>
 
             <Text style={styles.text} >
-                This is my Hello world application. It has been build with React Native.
+                {I18n.t('This is my Hello world')}
             </Text>
             <Text style={styles.text} >
-               See the full code of this app by clicking on the link below.
+                {I18n.t('See the full code of this app')}
             </Text>
             <View style={styles.linkContainer}>
                 <Text style={styles.link} onPress={() => Linking.openURL('https://github.com/blobsmith/tetris-react-native')} >
-                    Full code of this mobile application
+                    {I18n.t('Full code of this mobile application')}
                 </Text>
                 <Text style={styles.link} onPress={() => Linking.openURL('https://github.com/blobsmith/tetris')} >
-                    Full code of the React web application
+                    {I18n.t('Full code of the React web application')}
                 </Text>
                 <Text style={styles.link} onPress={() => Linking.openURL('https://www.linkedin.com/in/gilbertolivier/')} >
-                    You can contact me on LinkedIn
+                    {I18n.t('You can contact me')}
                 </Text>
             </View>
         </ScrollView>

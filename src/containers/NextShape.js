@@ -5,6 +5,7 @@ import { Surface, Group } from 'ReactNativeART';
 import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
 import {STYLE_REACT_COLOR} from '../Style/globalStyle';
+import I18n from '../services/i18n';
 
 class NextShape extends React.Component {
 
@@ -49,7 +50,7 @@ class NextShape extends React.Component {
 
         return (
             <View style={styles.nextShapeContainer} >
-                <Text style={styles.label} >NEXT SHAPE</Text>
+                <Text style={styles.label} >{I18n.t('NEXT SHAPE')}</Text>
                 <Surface width="150" height="150" >
                     <Group>
                         {ShapeComponents}

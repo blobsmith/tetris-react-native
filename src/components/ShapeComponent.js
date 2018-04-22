@@ -1,7 +1,6 @@
 import React from 'react';
 import { Shape, Path } from 'ReactNativeART';
 
-
 getPath = (coordinates) => {
     let path = new Path();
     let first = true;

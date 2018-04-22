@@ -7,13 +7,14 @@ import Header from '../components/Header';
 import Game from '../containers/Game';
 
 import scoreService from '../services/ScoreService';
-
+import I18n from '../services/i18n';
 import { STATE_INTRO } from '../reducers/workflow';
 
 class App extends React.Component  {
 
   state = {
-   title: 'Yet Another Block Game'
+    title: I18n.t('Yet Another Block Game'),
+    version: 'v1.11'
   };
 
 
@@ -28,7 +29,7 @@ class App extends React.Component  {
     let self = this;
     setTimeout(function() {
       self.setState({
-        title: 'Start now'
+        title: I18n.t('Start now')
       });
     }, 5000);
   };
@@ -43,7 +44,7 @@ class App extends React.Component  {
     const intro =
           <View style={styles.container} >
             <View style={styles.version}>
-              <Text style={styles.textVersion}>v1.10</Text>
+              <Text style={styles.textVersion}>{this.state.version}</Text>
             </View>
             <TouchableHighlight onPress={this.props.wfSetNextState} >
             <Image style={styles.image} source={require('../images/yabloga-intro.png')} />

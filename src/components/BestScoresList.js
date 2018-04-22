@@ -3,12 +3,13 @@ import { View, FlatList, Text, ScrollView, StyleSheet, Button } from 'react-nati
 import Navigation from '../containers/Navigation';
 
 import {globalStyle} from '../Style/globalStyle';
+import I18n from '../services/i18n';
 
 const BestScoreList = (props) => (
     <View style={[globalStyle.pageContainer, styles.highScores]} >
         <Navigation playOnClick={props.playOnClick} />
         <View style={styles.titleContainer} >
-            <Text style={styles.title} >Your top 10 high scores</Text>
+            <Text style={styles.title} >{I18n.t('Your top 10 high scores')}</Text>
         </View>
       <ScrollView >
         <FlatList

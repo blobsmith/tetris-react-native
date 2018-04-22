@@ -1,5 +1,6 @@
 import React  from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
+import I18n from '../services/i18n';
 
 class PanelLinesRemoved extends React.Component  {
 
@@ -44,7 +45,7 @@ class PanelLinesRemoved extends React.Component  {
           position: 'absolute',
           width: '100%',
           backgroundColor: 'white', opacity: fadeAnim}} >
-          <Text style={styles.message} >{this.props.lineNumberBeforeNextLevel} line{this.props.lineNumberBeforeNextLevel > 1?'s':''} before level {this.props.level+1}</Text>
+          <Text style={styles.message} >{this.props.lineNumberBeforeNextLevel} {I18n.t('line')}{this.props.lineNumberBeforeNextLevel > 1?'s':''} {I18n.t('before level')} {this.props.level+1}</Text>
         </Animated.View>
     );
   };

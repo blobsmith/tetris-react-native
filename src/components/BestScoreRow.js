@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import {STYLE_REACT_COLOR} from '../Style/globalStyle';
+import I18n from '../services/i18n';
 
 export default (BestScoreRow = props => (
     <View style={styles.row}>
@@ -13,9 +14,9 @@ export default (BestScoreRow = props => (
             <Text style={styles.primaryText} color="white">
                 {props.name}
             </Text>
-            <Text style={styles.secondaryText}>Level {props.level}</Text>
+            <Text style={styles.secondaryText}>{I18n.t('Level')} {props.level}</Text>
         </View>
-        <Text style={styles.points} >{props.points} points</Text>
+        <Text style={styles.points} >{props.points} {I18n.t('points')}</Text>
     </View>
 ));
 

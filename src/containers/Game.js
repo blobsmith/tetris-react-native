@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import blockManagement from '../services/BlockService';
 import gameStat from '../services/GameStatService';
 
-import {STATE_PLAY} from '../reducers/workflow'
+import {STATE_PLAY, STATE_INSTRUCTION} from '../reducers/workflow'
 
 class Game extends React.Component {
 
@@ -35,7 +35,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.wfSetState('instruction');
+        this.props.wfSetState(STATE_INSTRUCTION);
 
         // Set a new shape.
         this.props.newShape(blockManagement.getShapeRandomly());

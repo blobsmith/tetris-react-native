@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import I18n from '../services/i18n';
 
 const EnterYourName = (props) => (
     <View style={styles.highScores} >
-        <Text style={styles.title} >New high score</Text>
+        <Text style={styles.title} >{I18n.t('New high score')}</Text>
         <View style={styles.yourName}>
             <TextInput
                 underlineColorAndroid='transparent'
@@ -11,11 +12,11 @@ const EnterYourName = (props) => (
                 style={styles.inputName}
                 onChangeText={ (text) => props.changeTextInputValue(text) }
                 onSubmitEditing={() => props.submitFunction() }
-                placeholder="Enter your name"
+                placeholder={I18n.t('Enter your name')}
                 autoFocus={true}
             />
-            <Text style={styles.level} >Level {props.level}</Text>
-            <Text style={styles.points} >{props.points} points</Text>
+            <Text style={styles.level} >{I18n.t('Level')} {props.level}</Text>
+            <Text style={styles.points} >{props.points} {I18n.t('points')}</Text>
         </View>
     </View>
 );

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { View, PanResponder, StyleSheet, Image, Text } from 'react-native';
 
 import {STYLE_REACT_COLOR} from '../Style/globalStyle';
+import I18n from '../services/i18n';
 
 class GoDownButton extends React.Component  {
 
@@ -33,13 +34,10 @@ class GoDownButton extends React.Component  {
   }
 
   render() {
-    if (this.pressed) {
-      this.props.goDown(this.props.gameArea, this.props.shapeCoordinate);
-    }
     return (
     <View style={styles.goDownContainer} {...this.panResponder.panHandlers} >
-      <Text style={styles.fallText} >FALL</Text>
-      <Text style={styles.downText} >DOWN</Text>
+      <Text style={styles.fallText} >{I18n.t('FALL')}</Text>
+      <Text style={styles.downText} >{I18n.t('DOWN')}</Text>
     </View>
     );
   }
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
   fallText: {
     position: 'absolute',
     top: 12,
-    left: 18,
+    left: I18n.t('FALL_LEFT'),
     fontWeight: 'bold',
     fontSize: 18,
     color: 'white',
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
   downText: {
     position: 'absolute',
     top: 32,
-    left: 12,
+    left: I18n.t('DOWN_LEFT'),
     fontWeight: 'bold',
     fontSize: 18,
     color: 'white',
